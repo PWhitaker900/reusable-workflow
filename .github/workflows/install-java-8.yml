@@ -9,19 +9,6 @@ on:
       java_version:
         required: true
         type: string
-      DOCKER_REPO:            
-        required: true
-        type: string
-    secrets:
-      ARTIFACTORY_USER:
-        required: true
-      ARTIFACTORY_PASS:
-        required: true
-      DOCKER_USER:
-        required: true
-      DOCKER_PASSWORD:
-        required: true
-
 
   
 jobs:
