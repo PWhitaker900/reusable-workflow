@@ -10,6 +10,9 @@ on:
       scala_version:
         required: true
         type: string
+      repo_name:
+        required: true
+        type: string 
     secrets:
       docker_username:
         required: true
