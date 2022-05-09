@@ -3,9 +3,6 @@ name: build scala containers and publish them to docker cloud
 on: 
   workflow_call:
     inputs:
-      scala_version:
-        required: true
-        type: string
       java_version:
         required: true
         type: string
