@@ -44,6 +44,9 @@ jobs:
       - name: build and test the image
         run: sbt ++${{ inputs.scala_version }} clean coverage test coverageOff docker:publishLocal
         
+      - name: echo_test
+        run: echo "something scala ${{ input.scala_version }} something docker ${{ input.repo_name }}"
+        
       - name: Docker Push PR to docker cloud
         if: ${{ github.event_name == 'pull_request' }}
         run: |
