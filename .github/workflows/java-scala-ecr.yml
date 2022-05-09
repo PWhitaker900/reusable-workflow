@@ -48,10 +48,10 @@ jobs:
      
       - name: build and test the image
         run: sbt ++${{ inputs.scala_version }} clean coverage test coverageOff docker:publishLocal
-        
-      - name: echo_test
-        run: echo "something scala ${{ inputs.scala_version }} something docker ${{ inputs.repo_name }}"
-        
+      
+      - name: build and test the image
+        run: docker image ls
+            
       - name: Push PR to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
