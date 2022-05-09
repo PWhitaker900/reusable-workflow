@@ -46,14 +46,14 @@ jobs:
         run: |
           set -e
           PULL_TAG="pull-${{ github.event.number }}"          
-          docker tag otrl/platform-netcheck otrl/platform-netcheck:${PULL_TAG} 
-          docker push otrl/platform-netcheck:${PULL_TAG}
+          docker tag ${{ input.repo_name }} ${{ input.repo_name }}:${PULL_TAG} 
+          docker push ${{ input.repo_name }}:${PULL_TAG}
           
       - name: Docker Push Tag to docker cloud
         if: ${{ github.ref_type == 'tag' }}
         run: |
           set -e
           for tag in ${{ github.ref_name }} latest; do
-            docker tag otrl/platform-netcheck otrl/platform-netcheck:${{ github.ref_name }} && docker push otrl/platform-netcheck:${{ github.ref_name }}
+            docker tag ${{ input.repo_name }} ${{ input.repo_name }}:${{ github.ref_name }} && docker push ${{ input.repo_name }}:${{ github.ref_name }}
           done
   
