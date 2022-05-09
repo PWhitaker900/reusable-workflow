@@ -50,7 +50,7 @@ jobs:
         run: sbt ++${{ inputs.scala_version }} clean coverage test coverageOff docker:publishLocal
         
       - name: echo_test
-        run: echo "something scala ${{ input.scala_version }} something docker ${{ input.repo_name }}"
+        run: echo "something scala ${{ inputs.scala_version }} something docker ${{ inputs.repo_name }}"
         
       - name: Push PR to Amazon ECR
         env:
