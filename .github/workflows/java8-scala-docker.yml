@@ -44,22 +44,19 @@ jobs:
       - name: build and test the image
         run: sbt ++${{ inputs.scala_version }} clean coverage test coverageOff docker:publishLocal
         
-      - name: echo_test
-        run: echo "something scala ${{ input.scala_version }} something docker ${{ input.repo_name }}"
-        
       - name: Docker Push PR to docker cloud
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           set -e
           PULL_TAG="pull-${{ github.event.number }}"          
-          docker tag ${{ input.repo_name }} ${{ input.repo_name }}:${PULL_TAG} 
-          docker push ${{ input.repo_name }}:${PULL_TAG}
+          docker tag ${{ inputs.repo_name }} ${{ inputs.repo_name }}:${PULL_TAG} 
+          docker push ${{ inputs.repo_name }}:${PULL_TAG}
           
       - name: Docker Push Tag to docker cloud
         if: ${{ github.ref_type == 'tag' }}
         run: |
           set -e
           for tag in ${{ github.ref_name }} latest; do
-            docker tag ${{ input.repo_name }} ${{ input.repo_name }}:${{ github.ref_name }} && docker push ${{ input.repo_name }}:${{ github.ref_name }}
+            docker tag ${{ inputs.repo_name }} ${{ inputs.repo_name }}:${{ github.ref_name }} && docker push ${{ inputs.repo_name }}:${{ github.ref_name }}
           done
   
