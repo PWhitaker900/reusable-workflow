@@ -41,5 +41,19 @@ jobs:
       - name: build and test the image
         run: sbt ++${{ inputs.scala_version }} clean coverage test coverageOff docker:publishLocal
         
-        
-        
+      - name: Docker Push PR to docker cloud
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          set -e
+          PULL_TAG="pull-${{ github.event.number }}"          
+          docker tag otrl/platform-netcheck otrl/platform-netcheck:${PULL_TAG} 
+          docker push otrl/platform-netcheck:${PULL_TAG}
+          
+      - name: Docker Push Tag to docker cloud
+        if: ${{ github.ref_type == 'tag' }}
+        run: |
+          set -e
+          for tag in ${{ github.ref_name }} latest; do
+            docker tag otrl/platform-netcheck otrl/platform-netcheck:${{ github.ref_name }} && docker push otrl/platform-netcheck:${{ github.ref_name }}
+          done
+  
