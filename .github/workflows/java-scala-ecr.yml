@@ -41,7 +41,7 @@ jobs:
     
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
-        secrets:
+        with:
           aws-access-key-id: ${{ secrets.aws_access_key_id }}
           aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
           aws-region: eu-west-2
@@ -55,10 +55,6 @@ jobs:
       - name: Push PR to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        secrets:
-          ecr_repo: ${{ secrets.ecr_repo }}
-        with:
-          repo_name: ${{ inputs.repo_name }}
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           PULL_TAG="pull-${{ github.event.number }}" 
